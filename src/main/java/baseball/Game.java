@@ -35,7 +35,13 @@ public class Game {
             return new GuessResult(true, 3, 0);
         }
         else {
-            return null;
+            int strikes = 0;
+            for (int i = 0; i < question.length(); i++) {
+                if (question.indexOf(guessNumber.charAt(i)) == i) {
+                    strikes++;
+                }
+            }
+            return new GuessResult(false, strikes,0);
         }
     }
 }
