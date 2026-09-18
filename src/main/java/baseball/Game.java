@@ -1,10 +1,7 @@
 package baseball;
 
 public class Game {
-
-    public void guess(String guessNumber) {
-        assertIllegalArgument(guessNumber);
-    }
+    public String question;
 
     private void assertIllegalArgument(String guessNumber) {
         if (guessNumber == null) {
@@ -30,5 +27,15 @@ public class Game {
         return guessNumber.charAt(0) == guessNumber.charAt(1)
                 || guessNumber.charAt(0) == guessNumber.charAt(2)
                 || guessNumber.charAt(1) == guessNumber.charAt(2);
+    }
+
+    public GuessResult guess(String guessNumber) {
+        assertIllegalArgument(guessNumber);
+        if (guessNumber.equals(question)) {
+            return new GuessResult(true, 3, 0);
+        }
+        else {
+            return null;
+        }
     }
 }
