@@ -31,17 +31,29 @@ public class Game {
 
     public GuessResult guess(String guessNumber) {
         assertIllegalArgument(guessNumber);
-        if (guessNumber.equals(question)) {
-            return new GuessResult(true, 3, 0);
+        int strikes = 0;
+        int balls = 0;
+        Result result = getResult(guessNumber, strikes, balls);
+        return new GuessResult(result.strikes == 3, result.strikes, result.balls);
+    }
+
+    private Result getResult(String guessNumber, int strikes, int balls) {
+        for (int i = 0; i < guessNumber.length(); i++) {
+            int index = question.indexOf(guessNumber.charAt(i));
+            if (index == i) strikes++;
+            else if (index > -1) balls++;
         }
-        else {
-            int strikes = 0;
-            for (int i = 0; i < question.length(); i++) {
-                if (question.indexOf(guessNumber.charAt(i)) == i) {
-                    strikes++;
-                }
-            }
-            return new GuessResult(false, strikes,0);
+        Result result = new Result(strikes, balls);
+        return result;
+    }
+
+    private static class Result {
+        public final int strikes;
+        public final int balls;
+
+        public Result(int strikes, int balls) {
+            this.strikes = strikes;
+            this.balls = balls;
         }
     }
 }
